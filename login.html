@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManuTrack - Gestion Agricole Intelligente</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+        <div id="loginPage" class="page active" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);">
+    <div class="login-card" style="background: var(--background); padding: 3rem; border-radius: 16px; box-shadow: 0 8px 32px var(--shadow); width: 100%; max-width: 400px; animation: fadeIn 0.5s ease-in-out;">
+        
+        <!-- Connexion -->
+        <div id="loginFormContainer">
+            <h2 style="text-align: center; color: var(--text); margin-bottom: 1.5rem;">Connexion</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" placeholder="Entrez votre nom" class="form-input" required>
+                </div>
+                 <div class="form-group">
+                    <label class="form-label" for="email">Nom d'utilisateur</label>
+                    <input type="email" id="email" placeholder="Entrez votre nom" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="Entrez votre mot de passe" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                Pas encore de compte ? <a href="#" id="showRegister" style="color: var(--accent); text-decoration: none;">S'inscrire</a>
+            </p>
+        </div>
+
+        <!-- Inscription -->
+        <div id="registerFormContainer" style="display: none;">
+            <h2 style="text-align: center; color: var(--text); margin-bottom: 1.5rem;">Inscription</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="regName">Nom complet</label>
+                    <input type="text" id="regName" placeholder="Entrez votre nom complet" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regUsername">Nom d'utilisateur</label>
+                    <input type="text" id="regUsername" placeholder="Choisissez un nom d'utilisateur" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regPassword">Mot de passe</label>
+                    <input type="password" id="regPassword" placeholder="Choisissez un mot de passe" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regConfirmPassword">Confirmer le mot de passe</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirmez votre mot de passe" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-user-plus"></i> S'inscrire
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                Déjà un compte ? <a href="#" id="showLogin" style="color: var(--accent); text-decoration: none;">Se connecter</a>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+              // Passer de connexion à inscription
+    document.getElementById('showRegister').addEventListener('click', function(e){
+        e.preventDefault();
+        document.getElementById('loginFormContainer').style.display = 'none';
+        document.getElementById('registerFormContainer').style.display = 'block';
+    });
+
+    document.getElementById('showLogin').addEventListener('click', function(e){
+        e.preventDefault();
+        document.getElementById('registerFormContainer').style.display = 'none';
+        document.getElementById('loginFormContainer').style.display = 'block';
+    });
+
+    // Connexion
+ 
+   document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email = e.target.querySelector('input[type="email"]').value;
+    const password = e.target.querySelector('input[type="password"]').value;
+
+    if (email === "admin@example.com" && password === "123456") {
+        showNotification('Connexion réussie !', 'success');
+
+        // Redirection après 1 seconde
+        setTimeout(() => {
+            window.location.href = 'dashboard.html'; // <-- URL de ta page dashboard
+        }, 1000);
+    } else {
+        showNotification('Email ou mot de passe incorrect', 'error');
+    }
+});
+
+
+
+
+    // Inscription
+    document.getElementById('registerForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = document.getElementById('regName').value.trim();
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
+        const confirm = document.getElementById('regConfirmPassword').value.trim();
+
+        if(password !== confirm){
+            showNotification("Les mots de passe ne correspondent pas", "error");
+            return;
+        }
+
+        // Simulation de création de compte
+        showNotification(`Compte ${username} créé avec succès !`, "success");
+        this.reset();
+        // Retour à la page connexion
+        document.getElementById('registerFormContainer').style.display = 'none';
+        document.getElementById('loginFormContainer').style.display = 'block';
+    });
+    </script>
+</div>
+</body>
+</html>

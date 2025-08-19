@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManuTrack - Gestion Agricole Intelligente</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                AgroTrack
+            </div>
+            <nav>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        Tableau de bord
+                    </li>
+                    <li class="nav-item" data-page="cultures">
+                        <i class="fas fa-leaf"></i>
+                        Cultures
+                    </li>
+                    <li class="nav-item" data-page="meteo">
+                        <i class="fas fa-cloud-sun"></i>
+                        Météo
+                    </li>
+                    <li class="nav-item" data-page="stats">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+    
+        <!-- Tableau de bord -->
+        <div id="dashboard" class="page">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Cultures actives</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">45ha</div>
+                    <div class="stat-label">Surface totale</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Tâches urgentes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Rendement moyen</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card weather-widget">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Météo aujourd'hui</div>
+                            <div>Brazzaville, Congo</div>
+                        </div>
+                    </div>
+                    <div class="weather-temp">28°C</div>
+                    <div>Ensoleillé</div>
+                    <div class="weather-details">
+                        <div class="weather-item">
+                            <i class="fas fa-eye"></i>
+                            <div>15km</div>
+                            <div>Visibilité</div>
+                        </div>
+                        <div class="weather-item">
+                            <i class="fas fa-tint"></i>
+                            <div>65%</div>
+                            <div>Humidité</div>
+                        </div>
+                        <div class="weather-item">
+                            <i class="fas fa-wind"></i>
+                            <div>12km/h</div>
+                            <div>Vent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="card-title">Alertes & Tâches</div>
+                    </div>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-tint"></i>
+                        Arrosage requis - Champ Nord (Maïs)
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-spray-can"></i>
+                        Traitement préventif - Champ Sud (Tomates)
+                    </div>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-cut"></i>
+                        Récolte prévue dans 5 jours - Champ Est (Blé)
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="card-title">Répartition des cultures</div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Maïs</span>
+                            <span>40%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Tomates</span>
+                            <span>25%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%;"></div>
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Blé</span>
+                            <span>35%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestion des cultures -->
+        <div id="cultures" class="page">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Gestion des cultures</h1>
+                <button class="btn btn-primary" onclick="openModal('cultureModal')">
+                    <i class="fas fa-plus"></i>
+                    Ajouter une culture
+                </button>
+            </div>
+
+            <div id="culturesList">
+                <div class="culture-item">
+                    <div class="culture-header">
+                        <div>
+                            <div class="culture-name">Maïs du Champ Nord</div>
+                            <div style="margin-top: 0.5rem;">Plantée le 15 Mars 2025</div>
+                        </div>
+                        <div class="culture-type">Céréale</div>
+                    </div>
+                    <div class="culture-details">
+                        <div class="detail-item">
+                            <div class="detail-value">15 ha</div>
+                            <div class="detail-label">Surface</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-value">Croissance</div>
+                            <div class="detail-label">Stade</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-value">120 jours</div>
+                            <div class="detail-label">Cycle total</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-value">65%</div>
+                            <div class="detail-label">Progression</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%;"></div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-edit"></i>
+                            Modifier
+                        </button>
+                        <button class="btn btn-secondary" style="margin-left: 0.5rem;">
+                            <i class="fas fa-eye"></i>
+                            Détails
+                        </button>
+                    </div>
+                </div>
+
+                <div class="culture-item">
+                    <div class="culture-header">
+                        <div>
+                            <div class="culture-name">Tomates du Champ Sud</div>
+                            <div style="margin-top: 0.5rem;">Plantée le 1er Avril 2025</div>
+                        </div>
+                        <div class="culture-type">Légume</div>
+                    </div>
+                    <div class="culture-details">
+                        <div class="detail-item">
+                            <div class="detail-value">8 ha</div>
+                            <div class="detail-label">Surface</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-value">Floraison</div>
+                            <div class="detail-label">Stade</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-value">90 jours</div>
+                            <div class="detail-label">Cycle total</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-value">45%</div>
+                            <div class="detail-label">Progression</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%;"></div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-edit"></i>
+                            Modifier
+                        </button>
+                        <button class="btn btn-secondary" style="margin-left: 0.5rem;">
+                            <i class="fas fa-eye"></i>
+                            Détails
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Météo -->
+        <div id="meteo" class="page">
+            <h1 style="margin-bottom: 2rem;">Conditions météorologiques</h1>
+            
+            <div class="dashboard-grid">
+                <div class="card weather-widget">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="card-title">Aujourd'hui</div>
+                    </div>
+                    <div class="weather-temp">28°C</div>
+                    <div>Ensoleillé</div>
+                    <div class="weather-details">
+                        <div class="weather-item">
+                            <i class="fas fa-thermometer-half"></i>
+                            <div>32°C</div>
+                            <div>Max</div>
+                        </div>
+                        <div class="weather-item">
+                            <i class="fas fa-thermometer-quarter"></i>
+                            <div>22°C</div>
+                            <div>Min</div>
+                        </div>
+                        <div class="weather-item">
+                            <i class="fas fa-tint"></i>
+                            <div>0mm</div>
+                            <div>Pluie</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div class="card-title">Prévisions 7 jours</div>
+                    </div>
+                    <div style="display: grid; gap: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+                            <span>Demain</span>
+                            <div style="display: flex; gap: 1rem;">
+                                <i class="fas fa-cloud-sun"></i>
+                                <span>30°C / 24°C</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+                            <span>Dimanche</span>
+                            <div style="display: flex; gap: 1rem;">
+                                <i class="fas fa-cloud-rain"></i>
+                                <span>26°C / 20°C</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+                            <span>Lundi</span>
+                            <div style="display: flex; gap: 1rem;">
+                                <i class="fas fa-sun"></i>
+                                <span>29°C / 23°C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="card-title">Conseils agricoles</div>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-lightbulb"></i>
+                        Conditions idéales pour l'arrosage ce soir
+                    </div>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-umbrella"></i>
+                        Pluie prévue dimanche - Reporter les traitements
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div id="stats" class="page">
+            <h1 style="margin-bottom: 2rem;">Statistiques & Rapports</h1>
+            
+            <div class="chart-container">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-title">Évolution des rendements</div>
+                </div>
+                <div style="height: 300px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 8px;">
+                    <div style="text-align: center; color: #666;">
+                        <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <div>Graphique des rendements par saison</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="card-title">Journal des interventions</div>
+                    </div>
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        <div style="padding: 0.75rem 0; border-bottom: 1px solid #eee;">
+                            <div style="font-weight: 600;">Arrosage - Champ Nord</div>
+                            <div style="font-size: 0.875rem; color: #666;">14 Août 2025 - 18:30</div>
+                        </div>
+                        <div style="padding: 0.75rem 0; border-bottom: 1px solid #eee;">
+                            <div style="font-weight: 600;">Fertilisation - Champ Sud</div>
+                            <div style="font-size: 0.875rem; color: #666;">12 Août 2025 - 08:00</div>
+                        </div>
+                        <div style="padding: 0.75rem 0; border-bottom: 1px solid #eee;">
+                            <div style="font-weight: 600;">Traitement phytosanitaire - Champ Est</div>
+                            <div style="font-size: 0.875rem; color: #666;">10 Août 2025 - 07:15</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="card-title">Export des données</div>
+                    </div>
+                    <div style="display: grid; gap: 1rem;">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-file-pdf"></i>
+                            Exporter en PDF
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-file-excel"></i>
+                            Exporter en Excel
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-cog"></i>
+                            Paramètres d'export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Ajouter Culture -->
+    <div id="cultureModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ajouter une nouvelle culture</h2>
+                <button class="close-btn" onclick="closeModal('cultureModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="cultureForm">
+                <div class="form-group">
+                    <label class="form-label">Nom de la culture</label>
+                    <input type="text" class="form-input" placeholder="Ex: Maïs du Champ Nord">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type de culture</label>
+                    <select class="form-select">
+                        <option>Céréale</option>
+                        <option>Légume</option>
+                        <option>Fruit</option>
+                        <option>Légumineuse</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Surface (hectares)</label>
+                    <input type="number" class="form-input" placeholder="Ex: 15">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Date de plantation</label>
+                    <input type="date" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stade de croissance</label>
+                    <select class="form-select">
+                        <option>Plantation</option>
+                        <option>Germination</option>
+                        <option>Croissance</option>
+                        <option>Floraison</option>
+                        <option>Fructification</option>
+                        <option>Maturation</option>
+                        <option>Récolte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Durée du cycle (jours)</label>
+                    <input type="number" class="form-input" placeholder="Ex: 120">
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('cultureModal')">
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Ajouter la culture
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+         // Passer de connexion à inscription
+   
+
+    // Connexion
+ 
+
+
+
+
+
+   
+        // Variables globales
+        let cultures = [
+            {
+                id: 1,
+                nom: "Maïs du Champ Nord",
+                type: "Céréale",
+                surface: 15,
+                datePlantation: "2025-03-15",
+                stade: "Croissance",
+                cycle: 120,
+                progression: 65
+            },
+            {
+                id: 2,
+                nom: "Tomates du Champ Sud",
+                type: "Légume",
+                surface: 8,
+                datePlantation: "2025-04-01",
+                stade: "Floraison",
+                cycle: 90,
+                progression: 45
+            },
+            {
+                id: 3,
+                nom: "Blé du Champ Est",
+                type: "Céréale",
+                surface: 22,
+                datePlantation: "2025-02-20",
+                stade: "Maturation",
+                cycle: 150,
+                progression: 90
+            }
+        ];
+
+        let interventions = [
+            { type: "Arrosage", champ: "Champ Nord", date: "2025-08-14", heure: "18:30" },
+            { type: "Fertilisation", champ: "Champ Sud", date: "2025-08-12", heure: "08:00" },
+            { type: "Traitement phytosanitaire", champ: "Champ Est", date: "2025-08-10", heure: "07:15" },
+            { type: "Désherbage", champ: "Champ Nord", date: "2025-08-08", heure: "09:00" },
+            { type: "Inspection", champ: "Champ Sud", date: "2025-08-06", heure: "16:30" }
+        ];
+
+        // Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const navMenu = document.getElementById('navMenu');
+
+            // Menu mobile
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('mobile-open');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // Fermer le menu mobile lors du clic sur un élément
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (navMenu.classList.contains('mobile-open')) {
+                        navMenu.classList.remove('mobile-open');
+                        mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+                        mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+                    }
+                });
+            });
+
+            // Fermer le menu mobile lors du clic à l'extérieur
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('nav') && navMenu.classList.contains('mobile-open')) {
+                    navMenu.classList.remove('mobile-open');
+                    mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+                    mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Mise à jour navigation active
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Affichage de la page
+                    pages.forEach(page => page.classList.remove('active'));
+                    document.getElementById(targetPage).classList.add('active');
+                    
+                    // Mise à jour du contenu selon la page
+                    if (targetPage === 'cultures') {
+                        renderCultures();
+                    } else if (targetPage === 'stats') {
+                        renderInterventions();
+                    } else if (targetPage === 'dashboard') {
+                        updateDashboardStats();
+                    }
+                });
+            });
+
+            // Initialisation
+            renderCultures();
+            updateDashboardStats();
+            loadWeatherData();
+        });
+
+        // Gestion des modales
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermer modal en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target.id);
+            }
+        });
+
+        // Rendu des cultures
+        function renderCultures() {
+            const container = document.getElementById('culturesList');
+            container.innerHTML = '';
+
+            cultures.forEach(culture => {
+                const cultureElement = createCultureElement(culture);
+                container.appendChild(cultureElement);
+            });
+        }
+
+        function createCultureElement(culture) {
+            const div = document.createElement('div');
+            div.className = 'culture-item';
+            div.innerHTML = `
+                <div class="culture-header">
+                    <div>
+                        <div class="culture-name">${culture.nom}</div>
+                        <div style="margin-top: 0.5rem;">Plantée le ${formatDate(culture.datePlantation)}</div>
+                    </div>
+                    <div class="culture-type">${culture.type}</div>
+                </div>
+                <div class="culture-details">
+                    <div class="detail-item">
+                        <div class="detail-value">${culture.surface} ha</div>
+                        <div class="detail-label">Surface</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">${culture.stade}</div>
+                        <div class="detail-label">Stade</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">${culture.cycle} jours</div>
+                        <div class="detail-label">Cycle total</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">${culture.progression}%</div>
+                        <div class="detail-label">Progression</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${culture.progression}%;"></div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-secondary" onclick="editCulture(${culture.id})">
+                        <i class="fas fa-edit"></i>
+                        Modifier
+                    </button>
+                    <button class="btn btn-secondary" style="margin-left: 0.5rem;" onclick="viewCulture(${culture.id})">
+                        <i class="fas fa-eye"></i>
+                        Détails
+                    </button>
+                    <button class="btn btn-secondary" style="margin-left: 0.5rem; background: #ffebee; color: #c62828;" onclick="deleteCulture(${culture.id})">
+                        <i class="fas fa-trash"></i>
+                        Supprimer
+                    </button>
+                </div>
+            `;
+            return div;
+        }
+
+        // Gestion du formulaire de culture
+        document.getElementById('cultureForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const newCulture = {
+                id: Date.now(),
+                nom: e.target.querySelector('input[placeholder*="Nom"]').value,
+                type: e.target.querySelector('select').value,
+                surface: parseInt(e.target.querySelector('input[type="number"]').value),
+                datePlantation: e.target.querySelector('input[type="date"]').value,
+                stade: e.target.querySelectorAll('select')[1].value,
+                cycle: parseInt(e.target.querySelectorAll('input[type="number"]')[1].value),
+                progression: 0
+            };
+
+            cultures.push(newCulture);
+            renderCultures();
+            updateDashboardStats();
+            closeModal('cultureModal');
+            e.target.reset();
+            
+            // Afficher notification de succès
+            showNotification('Culture ajoutée avec succès !', 'success');
+        });
+
+        // Actions sur les cultures
+        function editCulture(id) {
+            const culture = cultures.find(c => c.id === id);
+            if (culture) {
+                showNotification(`Modification de ${culture.nom}`, 'info');
+                // Ici on pourrait ouvrir un modal de modification
+            }
+        }
+
+        function viewCulture(id) {
+            const culture = cultures.find(c => c.id === id);
+            if (culture) {
+                showNotification(`Affichage des détails de ${culture.nom}`, 'info');
+                // Ici on pourrait ouvrir un modal de détails
+            }
+        }
+
+        function deleteCulture(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette culture ?')) {
+                cultures = cultures.filter(c => c.id !== id);
+                renderCultures();
+                updateDashboardStats();
+                showNotification('Culture supprimée avec succès !', 'success');
+            }
+        }
+
+        // Mise à jour des statistiques du dashboard
+        function updateDashboardStats() {
+            const totalCultures = cultures.length;
+            const totalSurface = cultures.reduce((sum, culture) => sum + culture.surface, 0);
+            const avgProgression = Math.round(cultures.reduce((sum, culture) => sum + culture.progression, 0) / cultures.length);
+            
+            // Calcul des tâches urgentes (exemple basé sur la progression)
+            const tachesUrgentes = cultures.filter(c => c.progression > 80 || c.progression < 20).length;
+
+            // Mise à jour de l'affichage
+            const statCards = document.querySelectorAll('.stat-card .stat-value');
+            if (statCards.length >= 4) {
+                statCards[0].textContent = totalCultures;
+                statCards[1].textContent = `${totalSurface}ha`;
+                statCards[2].textContent = tachesUrgentes;
+                statCards[3].textContent = `${avgProgression}%`;
+            }
+
+            // Mise à jour de la répartition des cultures
+            updateCultureDistribution();
+        }
+
+        function updateCultureDistribution() {
+            const typeCount = {};
+            const totalSurface = cultures.reduce((sum, culture) => sum + culture.surface, 0);
+            
+            cultures.forEach(culture => {
+                if (typeCount[culture.type]) {
+                    typeCount[culture.type] += culture.surface;
+                } else {
+                    typeCount[culture.type] = culture.surface;
+                }
+            });
+
+            // Ici on pourrait mettre à jour le graphique de répartition
+            // Pour l'exemple, on garde les valeurs statiques
+        }
+
+        // Rendu des interventions
+        function renderInterventions() {
+            const container = document.querySelector('#stats .card .journal-interventions');
+            if (!container) return;
+
+            container.innerHTML = '';
+            
+            interventions.slice(0, 5).forEach(intervention => {
+                const div = document.createElement('div');
+                div.style.cssText = 'padding: 0.75rem 0; border-bottom: 1px solid #eee;';
+                div.innerHTML = `
+                    <div style="font-weight: 600;">${intervention.type} - ${intervention.champ}</div>
+                    <div style="font-size: 0.875rem; color: #666;">${formatDate(intervention.date)} - ${intervention.heure}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Chargement des données météo (simulation)
+        function loadWeatherData() {
+            // Simulation d'appel API météo
+            setTimeout(() => {
+                const weatherData = {
+                    current: {
+                        temperature: 28,
+                        condition: "Ensoleillé",
+                        humidity: 65,
+                        visibility: 15,
+                        wind: 12,
+                        max: 32,
+                        min: 22,
+                        rain: 0
+                    },
+                    forecast: [
+                        { day: "Demain", icon: "cloud-sun", max: 30, min: 24 },
+                        { day: "Dimanche", icon: "cloud-rain", max: 26, min: 20 },
+                        { day: "Lundi", icon: "sun", max: 29, min: 23 }
+                    ]
+                };
+                
+                updateWeatherDisplay(weatherData);
+            }, 1000);
+        }
+
+        function updateWeatherDisplay(data) {
+            // Mise à jour affichée dans le code HTML déjà présent
+            // Cette fonction pourrait être étendue pour des mises à jour dynamiques
+        }
+
+        // Export des données
+        function exportToPDF() {
+            showNotification('Export PDF en cours...', 'info');
+            setTimeout(() => {
+                showNotification('Export PDF terminé !', 'success');
+            }, 2000);
+        }
+
+        function exportToExcel() {
+            showNotification('Export Excel en cours...', 'info');
+            setTimeout(() => {
+                showNotification('Export Excel terminé !', 'success');
+            }, 2000);
+        }
+
+        // Gestionnaires d'événements pour les exports
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfBtn = document.querySelector('button[onclick*="PDF"]');
+            const excelBtn = document.querySelector('button[onclick*="Excel"]');
+            
+            if (pdfBtn) pdfBtn.onclick = exportToPDF;
+            if (excelBtn) excelBtn.onclick = exportToExcel;
+        });
+
+        // Utilitaires
+        function formatDate(dateString) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('fr-FR', options);
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 3000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    ${message}
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Ajout des animations CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Simulation de données en temps réel
+        setInterval(() => {
+            // Mise à jour aléatoire de la progression des cultures
+            cultures.forEach(culture => {
+                if (Math.random() > 0.95) { // 5% de chance de mise à jour
+                    culture.progression = Math.min(100, culture.progression + Math.floor(Math.random() * 2));
+                }
+            });
+            
+            // Mise à jour de l'affichage si on est sur la page des cultures
+            if (document.getElementById('cultures').classList.contains('active')) {
+                renderCultures();
+            }
+            
+            updateDashboardStats();
+        }, 30000); // Toutes les 30 secondes
+    </script>
+</body>
+</html>
